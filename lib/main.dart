@@ -37,6 +37,20 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
-        body: Container());
+        body: Center(
+          child: Column(
+            children: [
+              ElevatedButton(onPressed: (){
+              }, child: const Text("Elevated Button")),
+              OutlinedButton(onPressed: (){
+
+              }, child: const Text("Elevated Button")),
+              TextButton(onPressed: (){
+
+              }, child: const Text("Elevated Button")),
+
+            ],
+          ),
+        ));
   }
 }
