@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
+
   final String title;
 
   @override
@@ -37,6 +38,12 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
-        body: Container());
+        body: const Center(
+            child: Text(
+          'This is Center Text',
+          style: TextStyle(color: Colors.blue,fontSize:18,fontWeight:FontWeight.bold),
+        )
+        )
+    );
   }
 }
