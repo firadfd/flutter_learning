@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
+
   final String title;
 
   @override
@@ -37,6 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
-        body: Container());
+        body: Center(
+            child: Image.asset(
+                width: double.infinity, height: double.infinity,fit: BoxFit.fill, 'assets/images/logo.png')));
   }
 }
