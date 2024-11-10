@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -30,6 +32,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int number = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +40,18 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
-        body: Container());
+        body: Center(
+          child: InkWell(
+            onTap: (){
+              setState(() {
+                number = number + 1;
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text("$number"),
+            ),
+          ),
+        ));
   }
 }
