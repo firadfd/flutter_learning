@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -32,51 +32,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  int count = 0;
+  StreamController<int> streamController = StreamController<int>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(widget.title),
-        ),
-        body: Column(
-            mainAxisAlignment:MainAxisAlignment.center,children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 18.0,right: 18.0),
-            child: CustomTextInputField(
-              labelText: "Username",
-              hintText: "Enter your username",
-              controller: usernameController,
-              prefixIcon: const Icon(Icons.person),
-            ),
-          ),
-          const SizedBox(height: 16.0),
-          Padding(
-            padding: const EdgeInsets.only(left: 18.0,right: 18.0),
-            child: CustomTextInputField(
-              labelText: "Password",
-              hintText: "Enter your password",
-              controller: passwordController,
-              keyboardType: TextInputType.visiblePassword,
-              isPassword: true,
-              prefixIcon: const Icon(Icons.lock),
-            ),
-          ),
-          const SizedBox(height: 16.0),
-          ElevatedButton(
-            onPressed: () {
-              print("Username: ${usernameController.text}");
-              print("Password: ${passwordController.text}");
-            },
-            child: const Text("Submit"),
-          ),
-        ]));
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          count++;
+          streamController.sink.add(count);
+        },
+        child: const Icon(Icons.add),
+      ),
+      body: Center(
+        child: StreamBuilder(
+            stream: streamController.stream,
+            builder: (context, snapshot) {
+              if(snapshot.hasData){
+                return Text(snapshot.data.toString());
+              }else{
+                return const Text('No data');
+              }
+            }),
+      ),
+    );
   }
 }
-
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -156,18 +138,19 @@ class _CustomTextInputFieldState extends State<CustomTextInputField> {
         prefixIcon: widget.prefixIcon,
         filled: true,
         fillColor: Colors.grey[200],
-        contentPadding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 18.0),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 16.0, horizontal: 18.0),
         suffixIcon: widget.isPassword
             ? IconButton(
-          icon: Icon(
-            _obscureText ? Icons.visibility_off : Icons.visibility,
-          ),
-          onPressed: () {
-            setState(() {
-              _obscureText = !_obscureText;
-            });
-          },
-        )
+                icon: Icon(
+                  _obscureText ? Icons.visibility_off : Icons.visibility,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _obscureText = !_obscureText;
+                  });
+                },
+              )
             : null,
       ),
     );
